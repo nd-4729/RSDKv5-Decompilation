@@ -134,7 +134,7 @@ struct LineScroll {
 
 extern int32 stageMode;
 
-extern Camera cameras[2];
+extern Camera cameras[RETRO_USE_ORIGINAL_CODE ? 2 : CAMERA_COUNT];
 extern Camera *currentCamera;
 
 extern int32 xScrollOffset;

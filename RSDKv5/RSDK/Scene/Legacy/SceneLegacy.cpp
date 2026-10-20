@@ -4,7 +4,7 @@
 
 int32 RSDK::Legacy::stageMode = 0;
 
-RSDK::Legacy::Camera RSDK::Legacy::cameras[2];
+RSDK::Legacy::Camera RSDK::Legacy::cameras[RETRO_USE_ORIGINAL_CODE ? 2 : CAMERA_COUNT];
 RSDK::Legacy::Camera *RSDK::Legacy::currentCamera = NULL;
 
 int32 RSDK::Legacy::xScrollOffset  = 0;
@@ -424,10 +424,18 @@ void RSDK::Legacy::SetLayerDeformation(int32 selectedDef, int32 waveLength, int3
 void RSDK::Legacy::InitCameras()
 {
     memset(cameras, 0, sizeof(cameras));
+
+#if RETRO_USE_ORIGINAL_CODE
     cameras[0].enabled = true;
     cameras[1].enabled = true;
     cameras[0].target  = -1;
     cameras[1].target  = -1;
+#else
+    for (int32 i = 0; i < CAMERA_COUNT; ++i) {
+        cameras[i].enabled = true;
+        cameras[i].target  = -1;
+    }
+#endif
 
     currentCamera = &cameras[0];
 }
